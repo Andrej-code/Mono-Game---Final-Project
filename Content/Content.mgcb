@@ -85,6 +85,9 @@
 /processorParam:TextureFormat=Color
 /build:killer3.PNG
 
+#begin spriteFont.spritefont
+/copy:spriteFont.spritefont
+
 #begin survivor.png
 /importer:TextureImporter
 /processor:TextureProcessor

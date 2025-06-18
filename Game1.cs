@@ -25,7 +25,9 @@ namespace Mono_Game___Final_Project
 
         Rectangle survivorRect;
 
+        int numOfGasCanisters = 0;
 
+        SpriteFont textFont;
 
         Vector2 survivorSpeed;
 
@@ -101,6 +103,7 @@ namespace Mono_Game___Final_Project
             playerTexture = survivorTexture;
             generatorTexture = Content.Load<Texture2D>("generator");
             gasCanisterTexture = Content.Load<Texture2D>("gasCanister");
+            textFont = Content.Load<SpriteFont>("spriteFont");
         }
 
         protected override void Update(GameTime gameTime)
@@ -153,6 +156,7 @@ namespace Mono_Game___Final_Project
                 {
                     gasCanisters.RemoveAt(i);
                     i--;
+                    numOfGasCanisters++;
                 }
             }
 
@@ -200,6 +204,8 @@ namespace Mono_Game___Final_Project
             // TODO: Add your drawing code here
 
             _spriteBatch.Begin();
+
+            _spriteBatch.DrawString(textFont, (numOfGasCanisters).ToString("0"), new Vector2(100, 50), Color.Black);
 
             _spriteBatch.Draw(campGroundsTexture, campGroundsRect, Color.White);
 
