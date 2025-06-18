@@ -85,8 +85,12 @@
 /processorParam:TextureFormat=Color
 /build:killer3.PNG
 
-#begin spriteFont.spritefont
-/copy:spriteFont.spritefont
+#begin ScoreFont.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/processorParam:PremultiplyAlpha=True
+/processorParam:TextureFormat=Compressed
+/build:ScoreFont.spritefont
 
 #begin survivor.png
 /importer:TextureImporter

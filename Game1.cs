@@ -103,7 +103,7 @@ namespace Mono_Game___Final_Project
             playerTexture = survivorTexture;
             generatorTexture = Content.Load<Texture2D>("generator");
             gasCanisterTexture = Content.Load<Texture2D>("gasCanister");
-            textFont = Content.Load<SpriteFont>("spriteFont");
+            textFont = Content.Load<SpriteFont>("ScoreFont");
         }
 
         protected override void Update(GameTime gameTime)
@@ -175,7 +175,7 @@ namespace Mono_Game___Final_Project
             {
                 survivorRect.Offset(-survivorSpeed);
             }
-            if(survivorRect.Intersects(barrier2Rect))
+            if (survivorRect.Intersects(barrier2Rect))
             {
                 survivorRect.Offset(-survivorSpeed);
             }
@@ -205,8 +205,6 @@ namespace Mono_Game___Final_Project
 
             _spriteBatch.Begin();
 
-            _spriteBatch.DrawString(textFont, (numOfGasCanisters).ToString("0"), new Vector2(100, 50), Color.Black);
-
             _spriteBatch.Draw(campGroundsTexture, campGroundsRect, Color.White);
 
             _spriteBatch.Draw(playerTexture, survivorRect, Color.White);
@@ -216,6 +214,9 @@ namespace Mono_Game___Final_Project
             foreach (Rectangle gascanister in gasCanisters)
                 _spriteBatch.Draw(gasCanisterTexture, gascanister, Color.White);
 
+            _spriteBatch.DrawString(textFont, (numOfGasCanisters).ToString("0"), new Vector2(763, 30), Color.Red);
+
+            _spriteBatch.DrawString(textFont, "/3", new Vector2(780, 30), Color.Red);
 
             _spriteBatch.End();
 
