@@ -8,7 +8,10 @@ namespace Mono_Game___Final_Project
     enum Screen
     {
         Intro,
-        maskedKillerlogo
+        maskedKillerlogo,
+        winner,
+        gameOver
+        
     }
     public class Game1 : Game
     {
@@ -19,9 +22,12 @@ namespace Mono_Game___Final_Project
 
         Texture2D maskedKillerlogo;
 
+        Texture2D winner;
+
+        Texture2D gameOver;
+
         Texture2D campGroundsTexture;
         Rectangle campGroundsRect;
-
 
         Texture2D survivorTexture;
         Texture2D survivor1Texture;
@@ -71,8 +77,8 @@ namespace Mono_Game___Final_Project
         int playerX = 30;
         int playerY = 30;
 
-        int killerX = 667;
-        int killerY = 156;
+        int killerX = 710;
+        int killerY = 366;
 
 
         public Game1()
@@ -95,7 +101,7 @@ namespace Mono_Game___Final_Project
             campGroundsRect = new Rectangle(0, 0, 850, 550);
             barrierRect = new Rectangle(373, 0, 20, 280);
             barrier1Rect = new Rectangle(379, 344, 20, 280);
-            barrier2Rect = new Rectangle(405, 0, 200, 250);
+            barrier2Rect = new Rectangle(405, 0, 180, 250);
             barrier3Rect = new Rectangle(607, 0, 300, 150);
             barrier4Rect = new Rectangle(629, 399, 300, 150);
             barrier5Rect = new Rectangle(528, 500, 100, 20);
@@ -125,6 +131,7 @@ namespace Mono_Game___Final_Project
 
             // TODO: use this.Content to load your game content here
             maskedKillerlogo = Content.Load<Texture2D>("maskedKiller2logo");
+  
             campGroundsTexture = Content.Load<Texture2D>("campGrounds");
             survivorTexture = Content.Load<Texture2D>("survivor");
             survivor1Texture = Content.Load<Texture2D>("survivor1");
@@ -140,6 +147,8 @@ namespace Mono_Game___Final_Project
             gasCanisterTexture = Content.Load<Texture2D>("gasCanister");
             botTexture = killerTexture;
             textFont = Content.Load<SpriteFont>("ScoreFont");
+            winner = Content.Load<Texture2D>("winner");
+            gameOver = Content.Load<Texture2D>("gameOver");
         }
 
         protected override void Update(GameTime gameTime)
@@ -196,23 +205,25 @@ namespace Mono_Game___Final_Project
                     playerTexture = survivor3Texture;
                     botTexture = killer1Texture;
                 }
-                if(survivorRect.X < killerRect.X)
+
+                killerSpeed = Vector2.Zero;
+                if (survivorRect.X < killerRect.X)
                 {
-                    killerSpeed.X -= 2;
+                    killerSpeed.X -= 1;
                 }
                 if (survivorRect.X > killerRect.X)
-                { 
-                    killerSpeed.X += 2;
+                {
+                    killerSpeed.X += 1;
                 }
 
-                if(survivorRect.Y < killerRect.Y)
+                if (survivorRect.Y < killerRect.Y)
                 {
-                    killerSpeed.Y -= 2;
+                    killerSpeed.Y -= 1;
                 }
 
                 if (survivorRect.Y > killerRect.Y)
                 {
-                    killerSpeed.Y += 2;
+                    killerSpeed.Y += 1;
                 }
                 killerRect.X += (int)killerSpeed.X;
                 survivorRect.X += (int)survivorSpeed.X;
@@ -274,6 +285,7 @@ namespace Mono_Game___Final_Project
                 {
                     survivorRect.Offset(-survivorSpeed);
                 }
+
                 if (killerRect.Intersects(barrier2Rect))
                 {
                     killerRect.Offset(-killerSpeed);
@@ -313,6 +325,17 @@ namespace Mono_Game___Final_Project
             }
 
 
+            if (numOfGasCanisters == 3)
+            {
+                    screen = Screen.winner;
+            }
+           
+            if (survivorRect.Intersects(killerRect))
+            {
+                screen = Screen.gameOver;
+            }
+
+
             base.Update(gameTime);
         }
 
@@ -343,6 +366,16 @@ namespace Mono_Game___Final_Project
                 _spriteBatch.DrawString(textFont, (numOfGasCanisters).ToString("0"), new Vector2(763, 30), Color.Red);
 
                 _spriteBatch.DrawString(textFont, "/3", new Vector2(780, 30), Color.Red);
+            }
+
+            else if (screen == Screen.winner)
+            {
+                _spriteBatch.Draw(winner, new Rectangle(0, 0, 850, 550), Color.White);
+            }
+
+            else if (screen == Screen.gameOver) 
+            { 
+                _spriteBatch.Draw(gameOver, new Rectangle (0,0, 859, 550),Color.White);
             }
             _spriteBatch.End();
 
